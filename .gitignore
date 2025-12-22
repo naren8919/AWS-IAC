@@ -1,0 +1,30 @@
+# Terraform local state and provider files
+.terraform/
+*.tfstate
+*.tfstate.backup
+.tfplan
+tfplan
+
+# Local SSH keys / secrets
+*.pem
+*.key
+terraform_key
+
+# Editor / IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Other
+*.tmp
