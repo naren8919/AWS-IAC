@@ -1,0 +1,45 @@
+name: 'Terraform Deploy (Dev Environment)'
+
+on:
+  push:
+    branches:
+      - 'branch-Develop'
+      - 'Develop'  # Just in case you renamed it
+
+jobs:
+  terraform-deploy:
+    name: 'Deploy to AWS (Dev)'
+    runs-on: ubuntu-latest
+    
+    # These environment variables pull from GitHub Secrets
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: 'us-east-1' # Change this if your region is different
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Install Terraform on the runner
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.5.0" # You can adjust your Terraform version here
+
+      # 3. Initialize Terraform (downloads providers and backend)
+      - name: Terraform Init
+        run: terraform init
+
+      # 4. Check formatting (optional but best practice)
+      - name: Terraform Format
+        run: terraform fmt -check || true
+
+      # 5. Review the plan
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      # 6. Apply the changes automatically
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
