@@ -1,0 +1,58 @@
+# Terraform Variables File (terraform.tfvars)
+# 
+# IMPORTANT: This file contains sensitive/environment-specific values
+# 
+# DO NOT commit this file to git if it contains real credentials!
+# Instead, copy this file to terraform.tfvars and update with your values
+# 
+# Instructions:
+# 1. Copy this file: cp terraform.tfvars.example terraform.tfvars
+# 2. Update the values below with your AWS settings
+# 3. Never commit terraform.tfvars to version control
+
+# AWS Region where resources will be created
+# Free tier available in most regions
+region = "us-east-2"
+
+# EC2 Instance Type
+# t2.micro is free tier eligible (750 hours/month)
+instance_type = "t2.micro"
+
+# Project name (used for resource naming and tagging)
+# This helps identify all related resources
+project = "AWS-IAC"
+
+# AMI (Amazon Machine Image) ID
+# Leave blank ("") to auto-select the latest Amazon Linux 2 AMI for your region
+# OR specify a specific AMI ID (example: ami-068c0051b15cdb816 for Amazon Linux 2)
+# To find other AMIs:
+#   1. AWS Console → EC2 → Launch Instance
+#   2. Choose desired OS
+#   3. Copy the AMI ID
+# 
+# RECOMMENDED: Leave blank for automatic selection
+AMI = ""
+
+# EC2 Key Pair Name
+# OPTION A: Leave blank ("") and Terraform will auto-generate a key pair
+#   - Private key saved to: AWS-IAC_generated_key.pem (in the workspace)
+#   - Use for SSH: ssh -i AWS-IAC_generated_key.pem ec2-user@<public-ip>
+#   - RECOMMENDED for learning/demo environments
+# 
+# OPTION B: Use an existing AWS key pair name
+#   - Must be created in AWS BEFORE applying Terraform
+#   - Create via AWS CLI: aws ec2 create-key-pair --key-name terraform-key --region us-east-2
+#   - OR AWS Console: EC2 → Key Pairs → Create Key Pair
+#   - Download and save the .pem file - keep it safe!
+#   - Use the name you created (example: "terraform-key")
+# 
+# RECOMMENDED: Leave blank for auto-generation
+key_name = ""
+
+# (Optional) Add these for advanced configurations:
+# 
+# environment = "dev"
+# cost_center = "engineering"
+# owner_email = "your.name@company.com"
+# enable_monitoring = true
+# backup_retention_days = 7
